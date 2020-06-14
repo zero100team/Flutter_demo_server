@@ -1,5 +1,6 @@
 import ws from 'ws';
 import Axios, { AxiosResponse } from 'axios';
+
 import dotenv from 'dotenv';
 import path from 'path';
 
@@ -10,14 +11,17 @@ console.log("client: ", process.argv[2]);
 const url = process.env.APIURL || 'http://localhost:5000';
 const wsUrl = process.env.WSURL || 'http://localhost:4000';
 
+console.log(url, wsUrl);
+
 Axios.post(`${url}/login`, {
     id: process.argv[2],
     pass: "zero100"
 })
   .then((res: AxiosResponse) => {
-    // logoutTest(res);
-    // friendsTest(res);
-    chatTest(res);
+    console.log("OK");
+    if(process.argv[3] === "chat") chatTest(res);
+    if(process.argv[3] === "friends") friendsTest(res);
+    if(process.argv[3] === "logout") logoutTest(res);
   });
 
 const logoutTest = (ctx: AxiosResponse) => {
@@ -53,7 +57,7 @@ const chatTest = (ctx: AxiosResponse) => {
     let count = 0;
 
     setInterval(() => {
-        cli.send(JSON.stringify({from: ctx.data.key, to: process.argv[3], msg: `Hello from ${process.argv[2]}`}));
+        cli.send(JSON.stringify({from: ctx.data.id, msg: `Hello from ${process.argv[2]}`}));
         count+=1;
     }, 1000);
 }

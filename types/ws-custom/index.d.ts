@@ -1,7 +1,8 @@
-import http from 'http';
+import * as http from 'http';
+import {sessToken} from '../../model';
 
-declare module 'ws-custom' {
-    export interface wsIncomingMessage extends http.IncomingMessage {
-        user: string;
-    }
+declare module "http" {
+    interface IncomingMessage {
+        user?: sessToken;
+    }    
 }
