@@ -1,10 +1,10 @@
 import ws from 'ws';
-import Axios, { AxiosResponse } from 'axios';
+import Axios, { AxiosResponse, AxiosError } from 'axios';
 
 import dotenv from 'dotenv';
 import path from 'path';
 
-dotenv.config({path: path.join(__dirname + './.env.test')});
+dotenv.config({path: path.join(__dirname, './.env.test')});
 
 console.log("client: ", process.argv[2]);
 
@@ -22,6 +22,9 @@ Axios.post(`${url}/login`, {
     if(process.argv[3] === "chat") chatTest(res);
     if(process.argv[3] === "friends") friendsTest(res);
     if(process.argv[3] === "logout") logoutTest(res);
+  })
+  .catch((err: AxiosError) => {
+      console.log(err.config.url, err.response?.data, err.response?.statusText);
   });
 
 const logoutTest = (ctx: AxiosResponse) => {
