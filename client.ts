@@ -22,6 +22,7 @@ Axios.post(`${url}/login`, {
     if(process.argv[3] === "chat") chatTest(res);
     if(process.argv[3] === "friends") friendsTest(res);
     if(process.argv[3] === "logout") logoutTest(res);
+    if(process.argv[3] === "recentTest") recentTest(res);
   })
   .catch((err: AxiosError) => {
       console.log(err.config.url, err.response?.data, err.response?.statusText);
@@ -64,3 +65,13 @@ const chatTest = (ctx: AxiosResponse) => {
         count+=1;
     }, 1000);
 }
+
+const recentTest = (ctx: AxiosResponse) => {
+    Axios.get(`${url}/recent`, {headers: {"X-Access-Token": ctx.data.token}})
+      .then((res: AxiosResponse) => {
+          console.log(JSON.stringify(res.data));
+      })
+      .catch((err) => {
+          console.log(err.response.data);
+      });
+};

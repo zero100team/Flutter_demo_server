@@ -21,3 +21,10 @@ export const users: sess[] = [];
 export const wsSess: Map<String, ws> = new Map();
 
 export const recentMsg: string[] = [];
+
+export const addRecentMsg = (msg: string) => {
+    if(recentMsg.length >= 10) {
+        recentMsg.pop();
+    }
+    recentMsg.unshift(msg);
+};

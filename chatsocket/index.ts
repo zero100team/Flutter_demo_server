@@ -1,7 +1,7 @@
 import ws from 'ws';
 import http from 'http';
 import jwt from 'jsonwebtoken';
-import {users, sess, wsSess} from '../model';
+import {users, sess, wsSess, addRecentMsg} from '../model';
 
 const jwtSecret = "test";
 
@@ -46,6 +46,8 @@ const run = () => {
             try {
                 const target = users.find((it: sess) => (it.key === _request.user!.key));
                 target!.lastConn = new Date();
+                const item = JSON.parse(message);
+                if(item.msg) addRecentMsg(item.msg);
                 sendAll(_request.user!.key, message);
             } catch(err) {
                 ws.send({error: true, reason: JSON.stringify(err)});
