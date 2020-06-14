@@ -22,7 +22,7 @@ Axios.post(`${url}/login`, {
     if(process.argv[3] === "chat") chatTest(res);
     if(process.argv[3] === "friends") friendsTest(res);
     if(process.argv[3] === "logout") logoutTest(res);
-    if(process.argv[3] === "recentTest") recentTest(res);
+    if(process.argv[3] === "recent") recentTest(res);
   })
   .catch((err: AxiosError) => {
       console.log(err.config.url, err.response?.data, err.response?.statusText);

@@ -20,11 +20,20 @@ export const users: sess[] = [];
 
 export const wsSess: Map<String, ws> = new Map();
 
-export const recentMsg: string[] = [];
-
-export const addRecentMsg = (msg: string) => {
-    if(recentMsg.length >= 10) {
-        recentMsg.pop();
+class recentMsg {
+    buffer: chatReq[] = [];
+    
+    add = (msg: string) => {
+        const it = <chatReq>JSON.parse(msg);
+        if(this.buffer.length >= 10) {
+            this.buffer.splice(0, 1);
+        }
+        this.buffer.push(it);
+    };
+    
+    list = () => {
+        return this.buffer;
     }
-    recentMsg.unshift(msg);
-};
+}
+
+export const msg = new recentMsg();
