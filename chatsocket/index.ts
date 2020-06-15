@@ -46,6 +46,7 @@ const run = () => {
             try {
                 const target = users.find((it: sess) => (it.key === _request.user!.key));
                 target!.lastConn = new Date();
+                ws.send(message);
                 msg.add(message);
                 sendAll(_request.user!.key, message);
             } catch(err) {
@@ -56,8 +57,6 @@ const run = () => {
         ws.on('close', function close() {
             if(_request.user) wsSess.delete(_request.user.key);
         });
-        
-        ws.send("init");
     });
 
     killSleep();
