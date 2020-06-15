@@ -45,12 +45,12 @@ const run = () => {
             if(!_request.user) { return; }
             try {
                 const target = users.find((it: sess) => (it.key === _request.user!.key));
-                target!.lastConn = new Date();
+                if(target) target!.lastConn = new Date();
                 ws.send(message);
                 msg.add(message);
                 sendAll(_request.user!.key, message);
             } catch(err) {
-                ws.send({error: true, reason: JSON.stringify(err)});
+                console.log({error: true, reason: JSON.stringify(err)});
             }
         });
 
